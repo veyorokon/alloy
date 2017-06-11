@@ -1,0 +1,81 @@
+# Created by Dustin Dannenhauer
+# Walkthrough on building on Windows 10 using ubuntu Subsystem
+# June 6th 2017
+
+1. Make sure you have linux subsystem enabled on windows 10
+
+2. Clone or download this repo
+
+3. Install the following dependencies:
+
+sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev
+sudo apt-get install libboost-all-dev
+sudo add-apt-repository ppa:bitcoin/bitcoin
+sudo apt-get update
+sudo apt-get install libminiupnpc-dev 
+
+sudo apt-get install libdb4.8-dev
+sudo apt-get install libdb4.8++-dev
+sudo apt-get install libboost1.37-dev # Feel free to use libboost1.55-dev or whatever
+
+
+
+4. Compile the code
+
+First set proper permission for leveldb
+
+cd src
+chmod 755 leveldb/build_detect_platform
+
+Now run makefile to do actual compilation from the alloy/src folder
+
+make -f makefile.unix
+
+5. Run what you just compiled from within alloy/src
+
+./alloycoind
+
+and you should get the following output:
+
+'It is recommended you use the following random password:
+rpcuser=alloycoinrpc
+rpcpassword=AxXa1EEubaRncHtn5bsNLzw935bWnZETkv2uNwSLdpk3
+(you do not need to remember this password)
+The username and password MUST NOT be the same.
+If the file does not exist, create it with owner-readable-only file permissions.
+It is also recommended to set alertnotify so you are notified of problems;
+for example: alertnotify=echo %s | mail -s "Alloycoin Alert" admin@foo.com'
+
+6. Create a config that is personalized to you:
+
+emacs alloycoin.conf # Or use whatever editor you would like (i.e. vim, gedit, nano, etc)
+
+The contents of the file should be the following:
+
+server=1
+listen=1
+proxy=207.154.228.12
+dbcache=50
+daemon=1
+testnet=0
+maxuploadtarget=200
+rpcuser=alloycoinrpc
+rpcpassword=9yZBDHVQP7NCwCh9NMt9UQXfex9j8TKBQLfTQMx2642R
+alertnotify=echo %s | mail -s "Alloycoin Alert" your_email_here
+
+Save the file in home/your_username/.alloycoin/ and exit the editor
+
+7. run .alloycoind again and you should get a message saying 'Alloycoin server starting'
+
+8. Next, check you can access the server
+
+
+
+
+
+
+
+
+
+
+
